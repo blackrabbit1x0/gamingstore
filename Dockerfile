@@ -15,5 +15,11 @@ COPY games/ /var/www/html/
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html
 
-# Create .htaccess file
-RUN echo "DirectoryIndex home.php" > /var/www/html/.htaccess
+# Configure Apache
+RUN echo '<Directory /var/www/html/>' > /etc/apache2/conf-available/directory-config.conf \
+    && echo '    Options Indexes FollowSymLinks' >> /etc/apache2/conf-available/directory-config.conf \
+    && echo '    AllowOverride All' >> /etc/apache2/conf-available/directory-config.conf \
+    && echo '    Require all granted' >> /etc/apache2/conf-available/directory-config.conf \
+    && echo '    DirectoryIndex home.php' >> /etc/apache2/conf-available/directory-config.conf \
+    && echo '</Directory>' >> /etc/apache2/conf-available/directory-config.conf \
+    && a2enconf directory-config
