@@ -14,3 +14,6 @@ COPY games/ /var/www/html/
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html
+
+# Create .htaccess file
+RUN echo "DirectoryIndex home.php" > /var/www/html/.htaccess
