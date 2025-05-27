@@ -16,10 +16,11 @@ COPY games/ /var/www/html/
 RUN chown -R www-data:www-data /var/www/html
 
 # Configure Apache
-RUN echo '<Directory /var/www/html/>' > /etc/apache2/conf-available/directory-config.conf \
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf \
+    && echo '<Directory /var/www/html/>' > /etc/apache2/conf-available/directory-config.conf \
     && echo '    Options Indexes FollowSymLinks' >> /etc/apache2/conf-available/directory-config.conf \
     && echo '    AllowOverride All' >> /etc/apache2/conf-available/directory-config.conf \
     && echo '    Require all granted' >> /etc/apache2/conf-available/directory-config.conf \
-    && echo '    DirectoryIndex home.php' >> /etc/apache2/conf-available/directory-config.conf \
+    && echo '    DirectoryIndex home.php index.php' >> /etc/apache2/conf-available/directory-config.conf \
     && echo '</Directory>' >> /etc/apache2/conf-available/directory-config.conf \
     && a2enconf directory-config
